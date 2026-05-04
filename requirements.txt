@@ -23,5 +23,4 @@ uvicorn
 jinja2
 python-multipart
 setuptools
-python-dotenv
 -e .
