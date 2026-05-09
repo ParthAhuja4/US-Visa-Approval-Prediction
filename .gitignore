@@ -5,6 +5,7 @@ EasyVisa.csv
 demo.py
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+artifact
 
 # IPython
 profile_default/
