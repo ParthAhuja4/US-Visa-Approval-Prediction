@@ -173,15 +173,15 @@ class DataValidation:
 
             validation_status = len(validation_error_msg) == 0
 
-            # if validation_status:
-            #     drift_status = self.detect_dataset_drift(train_df, test_df)
-            #     if drift_status:
-            #         logging.info(f"Drift detected.")
-            #         validation_error_msg = "Drift detected"
-            #     else:
-            #         validation_error_msg = "Drift not detected"
-            # else:
-            #     logging.info(f"Validation_error: {validation_error_msg}")
+            if validation_status:
+                drift_status = self.detect_dataset_drift(train_df, test_df)
+                if drift_status:
+                    logging.info(f"Drift detected.")
+                    validation_error_msg = "Drift detected"
+                else:
+                    validation_error_msg = "Drift not detected"
+            else:
+                logging.info(f"Validation_error: {validation_error_msg}")
 
             data_validation_artifact = DataValidationArtifact(
                 validation_status=validation_status,

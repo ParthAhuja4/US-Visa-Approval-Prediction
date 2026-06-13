@@ -78,3 +78,22 @@ class ModelTrainerConfig:
     )
     expected_accuracy: float = MODEL_TRAINER_EXPECTED_SCORE
     model_config_file_path: str = MODEL_TRAINER_MODEL_CONFIG_FILE_PATH
+
+
+@dataclass
+class ModelEvaluationConfig:
+    hf_repo_id: str = HF_REPO_ID
+    hf_model_filename: str = HF_MODEL_FILENAME
+    changed_threshold_score: float = 0.02
+
+
+@dataclass
+class ModelPusherConfig:
+    hf_repo_id: str = HF_REPO_ID
+    hf_model_filename: str = HF_MODEL_FILENAME
+
+
+@dataclass
+class USvisaPredictorConfig:
+    hf_repo_id: str = HF_REPO_ID
+    hf_model_filename: str = HF_MODEL_FILENAME
