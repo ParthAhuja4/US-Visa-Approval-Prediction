@@ -2,8 +2,8 @@ import json
 import sys
 
 import pandas as pd
-from evidently.report import Report
-from evidently.metric_preset import DataDriftPreset
+from evidently import Report
+from evidently.presets import DataDriftPreset
 
 from pandas import DataFrame
 
@@ -105,26 +105,26 @@ class DataValidation:
         """
         try:
             # Use the modern evidently Report API (replaces deprecated Profile API)
-            report = Report(metrics=[DataDriftPreset()])
-            report.run(reference_data=reference_df, current_data=current_df)
+            report = Report([DataDriftPreset()])
+            eval = report.run(reference_data=reference_df, current_data=current_df)
 
-            # Extract the report as a dictionary
-            json_report = report.as_dict()
+            # Convert report to dict
+            json_report = eval.dict()
 
             write_yaml_file(
                 file_path=self.data_validation_config.drift_report_file_path,
                 content=json_report,
             )
 
-            # Navigate the new report structure to extract drift metrics
-            # The modern API stores results under metrics[0]["result"]
-            drift_result = json_report["metrics"][0]["result"]
+            print(json_report)
+            # Extract drift results
+            drift_result = json_report["metrics"][0]["value"]
 
-            n_features = drift_result["number_of_columns"]
-            n_drifted_features = drift_result["number_of_drifted_columns"]
+            n_features = drift_result["count"]
+            n_drifted_features = drift_result["share"]
 
             logging.info(f"{n_drifted_features}/{n_features} drift detected.")
-            drift_status = drift_result["dataset_drift"]
+            drift_status = n_features > 0
             return drift_status
         except Exception as e:
             raise USvisaException(e, sys) from e
