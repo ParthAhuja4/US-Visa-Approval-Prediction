@@ -115,8 +115,6 @@ class DataValidation:
                 file_path=self.data_validation_config.drift_report_file_path,
                 content=json_report,
             )
-
-            print(json_report)
             # Extract drift results
             drift_result = json_report["metrics"][0]["value"]
 
